@@ -24,27 +24,25 @@
                         <div class="content table-responsive table-full-width">
                             <table class="table table-hover">
                                 <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Title</th>
-                                    </tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th></th>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Javascriptパターン 優れたアプリケーション</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>PHP + MySQL マスターブック</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>コーディングを支える技術 成り立ちから学ぶプログラミング作法</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>7つのデータベース 7つの世界</td>
+                                    <tr th:each="library : ${libraries}" class="">
+                                        <td th:text="${library.id}">1</td>
+                                        <td th:text="${library.name}">Javascriptパターン　優れたアプリケーション</td>
+                                        <td th:switch="${library.userId}">
+                                            <form th:case="0" th:action="@{/library/borrow}" th:method="get">
+                                                <input type="submit" value="borrow" class="btn btn-info">
+                                                <input type="hidden" name="id" th:value="${library.id}">
+                                            </form>
+                                            <form th:case="${#authentication.principal.user.id}" th:action="@{/library/return}" th:method="post">
+                                                <input type="submit" value="return" class="btn btn-danger">
+                                                <input type="hidden" name="id" th:value="${library.id}">
+                                            </form>
+                                            <div th:case="*" class="btn btn-success">borrowing</div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
