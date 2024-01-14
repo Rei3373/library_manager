@@ -16,44 +16,45 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "LIBRARIES")
 public class Library {
+	@Id
+	@SequenceGenerator(name = "LIBRARY_ID_GENERATOR", sequenceName = "LIBRARY_ID_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LIBRARY_ID_GENERATOR")
+	@Column(name = "ID")
+	private Integer id;
 
-    @Id
-    @SequenceGenerator(name = "LIBRARY_ID_GENERATOR", sequenceName = "LIBRARY_ID_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LIBRARY_ID_GENERATOR")
-    @Column(name = "ID")
-    private Integer id;
+	@Column(name = "NAME")
+	private String name;
 
-    @Column(name = "NAME")
-    private String name;
-    
-    @Column(name = "USER_ID")
-    private Integer userId;
-    
-    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Log> logs;
-    
-    public Integer getId() {
-        return this.id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	@Column(name = "USER_ID")
+	private Integer userId;
 
-    public String getName() {
-        return this.name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public Integer getUserId() {
-    	return this.userId;
-    }
-    public void setUserId(Integer userId) {
-    	this.userId = userId;
-    }
-    
-    public List<Log> getLibraries(){
-    	return this.logs;
-    }
+	@OneToMany(mappedBy = "library", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Log> logs;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public List<Log> getLibraries() {
+		return logs;
+	}
 }
