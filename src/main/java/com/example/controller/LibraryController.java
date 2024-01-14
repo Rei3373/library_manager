@@ -62,4 +62,16 @@ public class LibraryController {
 		logService.create(log);
 		return "redirect:/library";
 	}
+    
+    @PostMapping("/return")
+	public String returnBook(@RequestParam("id") Integer id, @AuthenticationPrincipal LoginUser loginUser) {
+		Library library = libraryService.findById(id).get();
+		library.setUserId(0);
+		libraryService.update(library);
+
+		Log log = logService.findRetrunTarget(id, loginUser.getUser().getId()).get();
+		log.setReturnDate(LocalDateTime.now());
+		logService.update(log);
+		return "redirect:/library";
+	}
 }
